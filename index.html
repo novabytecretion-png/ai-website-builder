@@ -1,20 +1,148 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Prompt2App</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Prompt2App – Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #0b0f14;
+      font-family: Arial, sans-serif;
+      color: #e5e7eb;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 360px;
+      background: #141a22;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.6);
+    }
+
+    h2 {
+      margin: 0 0 5px;
+      text-align: center;
+    }
+
+    p {
+      text-align: center;
+      color: #9ca3af;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 12px;
+      background: #0b0f14;
+      border: 1px solid #1f2937;
+      border-radius: 6px;
+      color: #fff;
+      font-size: 14px;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #3b82f6;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 15px;
+      padding: 12px;
+      background: #3b82f6;
+      border: none;
+      border-radius: 6px;
+      color: #fff;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    button.secondary {
+      background: transparent;
+      border: 1px solid #3b82f6;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .note {
+      margin-top: 12px;
+      font-size: 12px;
+      text-align: center;
+      color: #9ca3af;
+    }
+  </style>
 </head>
+
 <body>
 
-<h2>AI Website Builder</h2>
+  <div class="card">
+    <h2>Prompt2App</h2>
+    <p>Sign in to continue</p>
 
-<textarea id="prompt" placeholder="Describe your website..."></textarea>
-<br><br>
-<button onclick="generate()">Generate</button>
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
 
-<br><br>
-<iframe id="preview"></iframe>
+    <button onclick="login()">Sign In</button>
+    <button class="secondary" onclick="signup()">Create Account</button>
 
-<script src="script.js"></script>
+    <div class="note">
+      Secure login powered by Firebase
+    </div>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCGyb9Vm8FqfUPbj0xw1utKSnnW4M_HJs4",
+      authDomain: "tells-ai-51341.firebaseapp.com",
+      projectId: "tells-ai-51341",
+      storageBucket: "tells-ai-51341.firebasestorage.app",
+      messagingSenderId: "192137691124",
+      appId: "1:192137691124:web:201c4aa655f2cf85dd03a1"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    function login() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      auth.signInWithEmailAndPassword(email, password)
+        .then(() => {
+          window.location.href = "dashboard.html";
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    }
+
+    function signup() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      auth.createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          window.location.href = "dashboard.html";
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    }
+  </script>
+
 </body>
-</html>
+  </html>
